@@ -1,0 +1,58 @@
+package com.example.alumno06.myapplication;
+
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+class UsuariosSQLiteHelper extends SQLiteOpenHelper {
+    String query = "CREATE TABLE Usuarios (nombre TEXT, direccion TEXT, telefono TEXT, correo TEXT)";
+    String nom,direc,tele,correo;
+    Button guardar,mostrar;
+    public UsuariosSQLiteHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+        super(context, name, factory, version);
+
+    }
+
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        db.execSQL(query);
+    }
+
+    public void onclick(View v){
+
+        nom= et_nom.getText()toString();
+        direc=(EditText) direc.findViewById(R.id.et_dir);
+        tele=(EditText) tele.findViewById(R.id.et_tel);
+        correo=(EditText) correo.findViewById(R.id.et_mail);
+        guardar=(Button) guardar.findViewById(R.id.bt_guardar);
+        mostrar=(Button) mostrar.findViewById(R.id.bt_mostrar);
+
+        if(v.getId()==R.id.bt_guardar){
+            AbrirConexionBd acbd=new AbrirConexionBd(this,"Usuario",null,1);
+            acbd.getWritableDatabase();
+            SQLiteDatabase bd=getWritableDatabase();
+            if(bd!=null){
+
+            }else {
+            Toast.makeText(, ""+bd, Toast.LENGTH_SHORT).show();
+                bd.execSQL("INSERT INTO datos(nombre,direccion,telefono,correo)"+"VALUES('"+nom+"','"+direc+"','"+tele+"','"+correo+"')");
+                Toast.makeText(, "regisro guardado", Toast.LENGTH_SHORT).show();
+        }
+
+
+        }else {
+
+        }
+
+    }
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
+    }
+}
